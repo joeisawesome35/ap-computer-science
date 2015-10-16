@@ -4,6 +4,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 import javax.swing.JFrame;
@@ -11,7 +13,7 @@ import javax.swing.Timer;
 
 public class Game extends JFrame implements KeyListener{
 	Unit one;
-	Bullet b;
+	List <Bullet> b;
 	GameView panel;
 	Scanner in = new Scanner(System.in);
     Timer timer = new Timer(250 , new ActionListener(){
@@ -24,6 +26,7 @@ public class Game extends JFrame implements KeyListener{
 	{
 		System.out.println("Enter start (0-500): ");
 		int strt = in.nextInt();
+		b = new ArrayList<Bullet>();
 		one = new Unit(0,strt,2,20,20,10);
 		panel = new GameView(one,b);
 	}
@@ -38,7 +41,9 @@ public class Game extends JFrame implements KeyListener{
 		case 'a': one.setD(0);one.move(0);break;
 		case 's': one.setD(3);one.move(3);break;
 		case 'd': one.setD(2);one.move(2);break;
-		case 'e': try{b = new Bullet(one.getX()+one.getW()/2,one.getY()+one.getH()/2, (int)(this.getMousePosition().getX()-(one.getX()+one.getW()/2)), (int)(this.getMousePosition().getY()-(one.getY()+one.getH()/2)), 1, 1);}catch(NullPointerException npe){}System.out.println("Pew"); break;
+		case 'e': b.add(new Bullet((one.getX()+one.getW()/2),
+				(one.getY()+one.getH()/2), ((int)(panel.getMousePosition().getX()-(one.getX()+one.getW()/2))), ((int)(panel.getMousePosition().getY()-(one.getY()+one.getH()/2))), 1, 1));
+				System.out.println("Pew"); break;
 		}
 		panel.repaint();
 	}

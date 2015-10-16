@@ -9,6 +9,8 @@ public class Bullet{
 	private int ySpeed;
 	private int xDir;
 	private int yDir;
+	private int height;
+	private int width;
 	private Rectangle r;
 	public Bullet(int x, int y, int xSpeed, int ySpeed, int xDir, int yDir)
 	{
@@ -16,15 +18,30 @@ public class Bullet{
 		this.y=y;
 		this.xSpeed=xSpeed;
 		this.ySpeed=ySpeed;
-		r.setRect(x, y, 6, 2);
+		height = 2;
+		width = 6;
+		r = new Rectangle();
+		r.setRect(x, y, width, height);
 	}
 	
-	public void move()
+	public void move(double direction)
 	{
-		this.setX(this.x+1);
-		this.setY(this.y+1);
+		
+		double speed = Math.sqrt(xSpeed*xSpeed + ySpeed*ySpeed);
+	    speed = Math.min(speed, 5.0);
+	    int x_inc = (int)(speed * Math.cos(direction));
+	    int y_inc = (int)(speed * Math.sin(direction));
+	    this.setX(this.x+x_inc);
+		this.setY(this.y+y_inc);
 	}
-	
+	public int getW()
+	{
+		return this.width;
+	}
+	public int getH()
+	{
+		return this.height;
+	}
 	public int getX()
 	{
 		return this.x;
